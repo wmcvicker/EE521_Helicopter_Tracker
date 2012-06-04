@@ -1,0 +1,48 @@
+This project was for EE 521 final project.  This tarball contains the following
+code:
+
+> Base Station code (written in java)
+   - Requires the RXTX serial library found at http://rxtx.qbang.org/
+   - Requires that the MSP430 be assosiated with a device named /dev/ttyS* where
+     the star must be replaced with a number
+      > this can be done using a soft link like this:
+         sudo ln -s /dev/ttyACM0 /dev/ttyS33
+> Helicopter code
+   - RF communication
+   - UART communication
+   - PWM code on the MSP430
+> Repeater
+   - UART communication between base station and MSP430
+   - RF communication
+
+All the C code in this tarball should be compiled with the gcc msp430 
+cross-compiler.  The msp430 compiler is included in this tarball with
+instructions on how to install it.
+
+The Base station requires a special serial communications library called
+RXTXcomm.  The JAR is included here: 
+   "base_station/basestation/serialcomm/rxtxcomm.jar"
+The library can also be found at http://rxtx.qbang.org/ along with support for
+installing the library, usage of the library, and examples.  Basically, for
+linux you need to copy the librxtxSerial.so static library file to your 
+java bin folder.  
+
+To run the base station java code, type for following:
+
+   > cd base_station
+   > java -jar BaseStation [port number]
+
+where the port number is the port that the MSP430 is connected to. I have not
+not been successfull in running this program in Windows.  In linux, the port
+number is the device associated to the MSP430 found in the /dev folder.  When
+trying to establish a serial connection with the MSP430 in Linux, I did have 
+trouble connecting to the device as did many others on the internet.  To fix 
+this you need to modify your usb driver to not drop the connection if a 
+timeout occurs.  Follow the instructions in the file 
+Connecting_To_MSP430_via_USB to fix this issue.
+
+The current state of this code basically tracks the helicopter and plots its
+location on a static Google Maps image.
+
+For further information, you can email William McVicker at
+wmcvicker AT calpoly DOT edu

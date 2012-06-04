@@ -1,0 +1,41 @@
+Follow these instructions to modify your USB driver.  This will allow you
+to connect to the MSP430 without any trouble in Linux:
+
+1. Download the cdc-acm source code for your linux distribution.
+   --> Google if you don't know how
+   --> If you are running linux 2.6.35-32, I have attached the modified
+      source code that you need.  So just copy this code to the folder 
+      specified in the next step.
+
+2. Once you have the source code copy the cdc-acm driver source to your headers
+   folder like this:
+
+     # cp [cdc-acm source] /lib/modules/`uname -r`/build/drivers/usb/class/.
+
+3. Now modify the following lines:
+
+      In the function "static void acm_port_down(...)":
+         - Find the line starting with "acm_set_control(...)" comment out
+           that line like this:
+         
+            //acm_set_control(acm, acm->ctrlout = 0);
+
+      In the function "static int acm_tty_open(...)"
+         - Find the line starting with "if (0 > acm_set_control(..." comment
+           the entire if statement out like this:
+
+            /*if (0 > acm_set_control(acm, acm->ctrlout = ACM_CTRL_DTR | ACM_CTRL_RTS) &&
+               (acm->ctrl_caps & USB_CDC_CAP_LINE))
+                  goto full_bailout;*/
+
+4. Now go ahead and compile this driver with the following command as root:
+
+   # cd /lib/modules/`uname -r`/build/
+   # make modules M=drivers/usb/class
+   # make modules_install M=/drivers/usb/class
+
+5. Reboot your computer and your MSP430 should have no trouble connecting to
+your machine.
+
+For further questions please email William McVicker at 
+wmcvicke AT calpoly DOT edu

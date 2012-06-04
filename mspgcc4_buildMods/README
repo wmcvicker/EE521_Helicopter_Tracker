@@ -1,0 +1,4 @@
+I modified these two scripts to get the mspgcc4 source code to compile:
+
+buildgcc.sh
+buildgcc.pl

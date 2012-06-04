@@ -1,0 +1,2 @@
+Main-Class: BS_GUI
+Class-Path: basestation/serialcomm/rxtxcomm.jar
